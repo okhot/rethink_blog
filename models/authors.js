@@ -4,7 +4,6 @@ const authorSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
     min: 4,
   },
   email: {
@@ -12,7 +11,7 @@ const authorSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  datCreated: {
+  createdAt: {
     type: Date,
     required: true,
     default: Date.now,

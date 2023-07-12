@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const authors = require("./routes/author");
 const blogs = require("./routes/blog");
+const comment = require("./routes/comment")
 
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
@@ -15,5 +16,6 @@ app.use(express.json());
 
 app.use("/authors", authors);
 app.use("/blogs", blogs);
+app.use("/comments", comment)
 
 app.listen(3000, () => console.log("Server is running on port 3000"));

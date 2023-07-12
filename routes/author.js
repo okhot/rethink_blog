@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Author = require("../models/authors");
+const authors = require("../models/authors");
 
 //Get a single author
 router.get("/", async (req, res) => {
@@ -31,8 +32,42 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.patch("/:id", (req, res) => {});
+router.put("/:id", async (req, res) => {
+  try{
+    const author = await Author.findOne({_id: req.params.id})
+    author.name  = req.body.name
+    author.email = req.body.email
+    await author.save()
+    res.send(author)
+  }catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+})
 
-router.delete("/:id", (req, res) => {});
+router.patch("/:id", async (req, res) => {
+  try{
+    const author = await Author.findOne({_id: req.params.id})
+    Object.keys(req.body).forEach((key) => {
+      author[key] = req.body[key]
+    })
+    await author.save()
+    res.send(author)
+  } catch(err) {
+    res.status(500).json(err)
+  }
+
+});
+
+router.delete("/:id", async(req, res) => {
+  try{
+    const author = await Author.findOne({_id: req.params.id})
+    author.deleteOne()
+    res.send().status(201)
+  } catch(err) {
+    res.send(500).json(err)
+  }
+
+});
 
 module.exports = router;
