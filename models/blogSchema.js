@@ -9,4 +9,7 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  author: { type: mongoose.Schema.ObjectId, ref: "Author" },
 });
+
+module.exports = mongoose.model("blog", blogSchema);
