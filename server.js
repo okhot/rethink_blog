@@ -16,6 +16,7 @@ db.once("open", () => console.log("Connected to Database"));
 
 app.use(express.json());
 
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
 app.use("/authors", authors);
 app.use("/blogs", blogs);
 app.use("/comments", comment);
