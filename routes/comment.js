@@ -2,7 +2,7 @@
  * @swagger
  * components:
  *   schemas:
- *     Comments:
+ *     Comment:
  *       type: object
  *       required:
  *         - blogs
@@ -45,7 +45,7 @@
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/component/schemas/Comments'
+ *                 $ref: '#/component/schemas/Comment'
  *   post:
  *     summary: Create a new comment
  *     tags: [Comments]
@@ -54,14 +54,14 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/comment'
+ *             $ref: '#/components/schemas/Comment'
  *     responses:
  *       200:
  *         description: The created comment.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/comment'
+ *               $ref: '#/components/schemas/Comment'
  *       500:
  *         description: Some server error
  * /comments/{id}:
@@ -81,7 +81,7 @@
  *         contens:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Comments'
+ *               $ref: '#/components/schemas/Comment'
  *       404:
  *         description: The comment was not found
  *   put:
@@ -99,7 +99,7 @@
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/Comments'
+ *            $ref: '#/components/schemas/Comment'
  *    responses:
  *      200:
  *        description: The comment was updated
@@ -126,14 +126,14 @@
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/Comments'
+ *            $ref: '#/components/schemas/Comment'
  *    responses:
  *      200:
  *        description: The comment was updated
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Comments'
+ *              $ref: '#/components/schemas/Comment'
  *      404:
  *        description: The comment was not found
  *      500:

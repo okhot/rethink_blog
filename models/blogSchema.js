@@ -9,13 +9,9 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-  views: {
-    type: Number,
-    default: 0,
+  meta: {
+    likes: { type: Number, default: 0 },
+    views: { type: Number, default: 0 },
   },
   authors: [{ type: mongoose.Schema.ObjectId, ref: "Author" }],
 });

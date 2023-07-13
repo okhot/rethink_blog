@@ -29,6 +29,38 @@
  *         title: How to become rich
  *         content: There's no recipe just work hard
  *         authors: ["64af06219dc0d6e8b22f375f"]
+ *         comments: ["64afd24347a8002ab5b3efc7"]
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Comment:
+ *       type: object
+ *       required:
+ *         - blogs
+ *         - content
+ *         - userInfo
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the author
+ *         content:
+ *           type: string
+ *           description: Content of the comment post
+ *         userInfo:
+ *            type: object
+ *            description: The info of the commenter
+ *         blog:
+ *            type: string
+ *            description: Get all comments for blog
+ *       example:
+ *         id: 64afd24347a8002ab5b3efc7
+ *         content: This is a comment
+ *         userInfo: {name: "Redneck Joe", email: "joered@gmail.com"}
+ *         blog: "64af06219dc0d6e8b22f375f"
+ *         meta: {likes: 0, views: 0}
  */
 
 /**
@@ -48,7 +80,7 @@
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/component/schemas/Author'
+ *                 $ref: '#/component/schemas/Blog'
  *   post:
  *     summary: Create a new blog
  *     tags: [Blogs]
@@ -84,7 +116,7 @@
  *         contens:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Author'
+ *               $ref: '#/components/schemas/Blog'
  *       404:
  *         description: The blog was not found
  *   put:
@@ -102,14 +134,14 @@
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/Author'
+ *            $ref: '#/components/schemas/Blog'
  *    responses:
  *      200:
  *        description: The blog was updated
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Author'
+ *              $ref: '#/components/schemas/Blog'
  *      404:
  *        description: The blog was not found
  *      500:
@@ -129,14 +161,14 @@
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/Author'
+ *            $ref: '#/components/schemas/Blog'
  *    responses:
  *      200:
  *        description: The blog was updated
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Author'
+ *              $ref: '#/components/schemas/Blog'
  *      404:
  *        description: The blog was not found
  *      500:
@@ -159,6 +191,76 @@
  *         description: The blog was not found
  */
 
+/**
+ * @swagger
+ * tags:
+ *   name: Likes
+ *   description: The Likes managing API
+ * /blogs/{id}/like:
+ *   put:
+ *    summary: Update the blog likes by the id
+ *    tags: [Likes]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: The blog likes id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Comment'
+ *    responses:
+ *      200:
+ *        description: The blog likes were updated
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Comment'
+ *      404:
+ *        description: The blog was not found
+ *      500:
+ *        description: Some error happened
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Views
+ *   description: The Views managing API
+ * /blogs/{id}/view:
+ *   put:
+ *    summary: Update the blog views by the id
+ *    tags: [Views]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: The blog views id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Comment'
+ *    responses:
+ *      200:
+ *        description: The blog views were updated
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Comment'
+ *      404:
+ *        description: The blog was not found
+ *      500:
+ *        description: Some error happened
+ */
+
 const express = require("express");
 const router = express.Router();
 const Blog = require("../models/blogSchema");
@@ -177,8 +279,6 @@ router.get("/:id", async (req, res) => {
     const blog = await Blog.findOne({ _id: req.params.id })
       .populate("comments")
       .populate("authors");
-    blog.views += 1;
-    await blog.save();
     res.send(blog);
   } catch (err) {
     res.status(500).json(err);
@@ -232,6 +332,24 @@ router.delete("/:id", async (req, res) => {
     res.status(200).send();
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+router.put("/:id/like", async (req, res) => {
+  try {
+    await Blog.updateOne({ _id: req.params.id }, { $inc: { "meta.likes": 1 } });
+    res.send(200);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.put("/:id/view", async (req, res) => {
+  try {
+    await Blog.updateOne({ _id: req.params.id }, { $inc: { "meta.views": 1 } });
+    res.send(200);
+  } catch (error) {
+    res.status(500).send(error);
   }
 });
 
