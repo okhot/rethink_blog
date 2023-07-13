@@ -35,11 +35,11 @@
  *   description: The author managing API
  * /authors:
  *   get:
- *     summary: Lists all the books
+ *     summary: Lists all the authors
  *     tags: [Authors]
  *     responses:
  *       200:
- *         description: The list of the books
+ *         description: The list of the authors
  *         content:
  *           application/json:
  *             schema:
@@ -47,7 +47,7 @@
  *               items:
  *                 $ref: '#/component/schemas/Author'
  *   post:
- *     summary: Create a new book
+ *     summary: Create a new author
  *     tags: [Authors]
  *     requestBody:
  *       required: true
@@ -57,7 +57,7 @@
  *             $ref: '#/components/schemas/Author'
  *     responses:
  *       200:
- *         description: The created book.
+ *         description: The created author.
  *         content:
  *           application/json:
  *             schema:
@@ -66,7 +66,7 @@
  *         description: Some server error
  * /authors/{id}:
  *   get:
- *     summary: Get the book by id
+ *     summary: Get the author by id
  *     tags: [Authors]
  *     parameters:
  *       - in: path
@@ -74,18 +74,18 @@
  *         schema:
  *           type: string
  *         required: true
- *         description: The book id
+ *         description: The author id
  *     responses:
  *       200:
- *         description: The book response by id
+ *         description: The author response by id
  *         contens:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Author'
  *       404:
- *         description: The book was not found
+ *         description: The author was not found
  *   put:
- *    summary: Update the book by the id
+ *    summary: Update the author by the id
  *    tags: [Authors]
  *    parameters:
  *      - in: path
@@ -93,7 +93,7 @@
  *        schema:
  *          type: string
  *        required: true
- *        description: The book id
+ *        description: The author id
  *    requestBody:
  *      required: true
  *      content:
@@ -102,17 +102,17 @@
  *            $ref: '#/components/schemas/Author'
  *    responses:
  *      200:
- *        description: The book was updated
+ *        description: The author was updated
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Book'
+ *              $ref: '#/components/schemas/author'
  *      404:
- *        description: The book was not found
+ *        description: The author was not found
  *      500:
  *        description: Some error happened
  *   patch:
- *    summary: Update the book by the id
+ *    summary: Update the author by the id
  *    tags: [Authors]
  *    parameters:
  *      - in: path
@@ -120,7 +120,7 @@
  *        schema:
  *          type: string
  *        required: true
- *        description: The book id
+ *        description: The author id
  *    requestBody:
  *      required: true
  *      content:
@@ -129,17 +129,17 @@
  *            $ref: '#/components/schemas/Author'
  *    responses:
  *      200:
- *        description: The book was updated
+ *        description: The author was updated
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Book'
+ *              $ref: '#/components/schemas/author'
  *      404:
- *        description: The book was not found
+ *        description: The author was not found
  *      500:
  *        description: Some error happened
  *   delete:
- *     summary: Remove the book by id
+ *     summary: Remove the author by id
  *     tags: [Authors]
  *     parameters:
  *       - in: path
@@ -147,13 +147,13 @@
  *         schema:
  *           type: string
  *         required: true
- *         description: The book id
+ *         description: The author id
  *
  *     responses:
  *       200:
- *         description: The book was deleted
+ *         description: The author was deleted
  *       404:
- *         description: The book was not found
+ *         description: The author was not found
  */
 
 const express = require("express");

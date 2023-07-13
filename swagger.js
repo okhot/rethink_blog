@@ -20,7 +20,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "https://blog-4mll.onrender.com",
       },
     ],
   },
